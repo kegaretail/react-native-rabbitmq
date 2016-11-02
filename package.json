@@ -1,0 +1,18 @@
+{
+  "name": "react-native-rabbitmq",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/kegaretail/react-native-rabbitmq.git"
+  },
+  "version": "0.0.1",
+  "description": "A RabbitMq component for React Native.",
+  "author": "Tim Honders",
+  "nativePackage": true,
+  "license": "MIT",
+  "homepage": "https://github.com/kegaretail/react-native-rabbitmq",
+  "keywords": [
+    "react-native",
+    "react",
+    "RabbitMq"
+  ]
+}

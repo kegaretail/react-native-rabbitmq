@@ -19,7 +19,7 @@ public class ReactNativeRabbitMqPackage implements ReactPackage {
     public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
         List<NativeModule> modules = new ArrayList<>();
         modules.add(new ReactNativeRabbitMqModule(reactContext));
-
+        modules.add(new RabbitMqConnection(reactContext));
         return modules;
     }
 

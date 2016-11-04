@@ -1,18 +1,87 @@
 {
-  "name": "react-native-rabbitmq",
-  "repository": {
-    "type" : "git",
-    "url" : "https://github.com/kegaretail/react-native-rabbitmq.git"
+  "_args": [
+    [
+      {
+        "raw": "react-native-rabbitmq",
+        "scope": null,
+        "escapedName": "react-native-rabbitmq",
+        "name": "react-native-rabbitmq",
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
+      },
+      "C:\\GitHub\\rnapp"
+    ]
+  ],
+  "_from": "react-native-rabbitmq@latest",
+  "_id": "react-native-rabbitmq@0.0.1",
+  "_inCache": true,
+  "_location": "/react-native-rabbitmq",
+  "_nodeVersion": "7.0.0",
+  "_npmOperationalInternal": {
+    "host": "packages-18-east.internal.npmjs.com",
+    "tmp": "tmp/react-native-rabbitmq-0.0.1.tgz_1478075892614_0.40764762787148356"
   },
-  "version": "0.0.1",
+  "_npmUser": {
+    "name": "timhonders",
+    "email": "tim.honders@kega.nl"
+  },
+  "_npmVersion": "3.10.8",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "react-native-rabbitmq",
+    "scope": null,
+    "escapedName": "react-native-rabbitmq",
+    "name": "react-native-rabbitmq",
+    "rawSpec": "",
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/react-native-rabbitmq/-/react-native-rabbitmq-0.0.1.tgz",
+  "_shasum": "03303b62544df03d33d3088830d02fa3be3697c6",
+  "_shrinkwrap": null,
+  "_spec": "react-native-rabbitmq",
+  "_where": "C:\\GitHub\\rnapp",
+  "author": {
+    "name": "Tim Honders"
+  },
+  "bugs": {
+    "url": "https://github.com/kegaretail/react-native-rabbitmq/issues"
+  },
+  "dependencies": {},
   "description": "A RabbitMq component for React Native.",
-  "author": "Tim Honders",
-  "nativePackage": true,
-  "license": "MIT",
+  "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "shasum": "03303b62544df03d33d3088830d02fa3be3697c6",
+    "tarball": "https://registry.npmjs.org/react-native-rabbitmq/-/react-native-rabbitmq-0.0.1.tgz"
+  },
+  "gitHead": "bf5e3cefd92e36fab4da1b02d66a5352484c056c",
   "homepage": "https://github.com/kegaretail/react-native-rabbitmq",
   "keywords": [
     "react-native",
     "react",
     "RabbitMq"
-  ]
+  ],
+  "license": "MIT",
+  "maintainers": [
+    {
+      "name": "timhonders",
+      "email": "tim.honders@kega.nl"
+    }
+  ],
+  "name": "react-native-rabbitmq",
+  "nativePackage": true,
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kegaretail/react-native-rabbitmq.git"
+  },
+  "scripts": {},
+  "version": "0.0.1"
 }

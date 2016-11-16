@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		5D72D2EC1C16249000E22EC1 /* RCTReactNativeRabbitMq.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5D72D2EB1C16249000E22EC1 /* RCTReactNativeRabbitMq.h */; };
 		5D72D2EE1C16249000E22EC1 /* RCTReactNativeRabbitMq.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D72D2ED1C16249000E22EC1 /* RCTReactNativeRabbitMq.m */; };
+		E82757861DD4899200DEF92C /* RabbitMqConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = E82757851DD4899200DEF92C /* RabbitMqConnection.m */; };
+		E82757A61DD4CEDF00DEF92C /* RabbitMqQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = E82757A51DD4CEDF00DEF92C /* RabbitMqQueue.m */; };
+		E84EF0841DDB5832000F141B /* RabbitMqDelegateLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = E84EF0831DDB5832000F141B /* RabbitMqDelegateLogger.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -28,6 +31,12 @@
 		5D72D2E81C16249000E22EC1 /* libRCTReactNativeRabbitMq.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRCTReactNativeRabbitMq.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D72D2EB1C16249000E22EC1 /* RCTReactNativeRabbitMq.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTReactNativeRabbitMq.h; sourceTree = "<group>"; };
 		5D72D2ED1C16249000E22EC1 /* RCTReactNativeRabbitMq.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCTReactNativeRabbitMq.m; sourceTree = "<group>"; };
+		E82757841DD4899200DEF92C /* RabbitMqConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RabbitMqConnection.h; sourceTree = "<group>"; };
+		E82757851DD4899200DEF92C /* RabbitMqConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RabbitMqConnection.m; sourceTree = "<group>"; };
+		E82757A41DD4CEDF00DEF92C /* RabbitMqQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RabbitMqQueue.h; sourceTree = "<group>"; };
+		E82757A51DD4CEDF00DEF92C /* RabbitMqQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RabbitMqQueue.m; sourceTree = "<group>"; };
+		E84EF0821DDB5832000F141B /* RabbitMqDelegateLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RabbitMqDelegateLogger.h; sourceTree = "<group>"; };
+		E84EF0831DDB5832000F141B /* RabbitMqDelegateLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RabbitMqDelegateLogger.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +69,12 @@
 		5D72D2EA1C16249000E22EC1 /* RCTReactNativeRabbitMq */ = {
 			isa = PBXGroup;
 			children = (
+				E84EF0821DDB5832000F141B /* RabbitMqDelegateLogger.h */,
+				E84EF0831DDB5832000F141B /* RabbitMqDelegateLogger.m */,
+				E82757A41DD4CEDF00DEF92C /* RabbitMqQueue.h */,
+				E82757A51DD4CEDF00DEF92C /* RabbitMqQueue.m */,
+				E82757841DD4899200DEF92C /* RabbitMqConnection.h */,
+				E82757851DD4899200DEF92C /* RabbitMqConnection.m */,
 				5D72D2EB1C16249000E22EC1 /* RCTReactNativeRabbitMq.h */,
 				5D72D2ED1C16249000E22EC1 /* RCTReactNativeRabbitMq.m */,
 			);
@@ -122,7 +137,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E84EF0841DDB5832000F141B /* RabbitMqDelegateLogger.m in Sources */,
 				5D72D2EE1C16249000E22EC1 /* RCTReactNativeRabbitMq.m in Sources */,
+				E82757861DD4899200DEF92C /* RabbitMqConnection.m in Sources */,
+				E82757A61DD4CEDF00DEF92C /* RabbitMqQueue.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -214,10 +232,10 @@
 			buildSettings = {
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../../react-native/React/**",
 					"$(SRCROOT)/node_modules/react-native/React",
 					"$(SRCROOT)/../../React/**",
+					"$(SRCROOT)/../../../ios/Pods/**",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -230,10 +248,10 @@
 			buildSettings = {
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../../React/**",
 					"$(SRCROOT)/../../react-native/React/**",
 					"$(SRCROOT)/node_modules/react-native/React/**",
+					"$(SRCROOT)/../../../ios/Pods/**",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";

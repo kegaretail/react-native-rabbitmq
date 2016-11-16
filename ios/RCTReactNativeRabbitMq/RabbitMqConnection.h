@@ -1,5 +1,9 @@
 #import "RCTBridge.h"
-#import "RMQClient.h""
+#import "RCTEventDispatcher.h"
+#import <RMQClient/RMQClient.h>
+#import <RMQClient/RMQChannel.h>
+#import "RabbitMqQueue.h"
+#import "RabbitMqDelegateLogger.h"
 
 @interface RabbitMqConnection : NSObject <RCTBridgeModule>
 

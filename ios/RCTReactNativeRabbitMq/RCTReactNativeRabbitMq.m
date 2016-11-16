@@ -1,6 +1,9 @@
 #import "RCTReactNativeRabbitMq.h"
 
+#import <RMQClient/RMQClient.h>
+
 @implementation ReactNativeRabbitMq
+
 
 RCT_EXPORT_MODULE();
 

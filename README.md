@@ -12,12 +12,12 @@ npm install react-native-rabbitmq --save
 ```
 use_frameworks!
 ```
-1. Add the following to your Podfile:
+2. Add the following to your Podfile:
 
 ```
 pod 'RMQClient', '~> 0.10.0'
 ```
-1. Instal the cocapods:
+3. Instal the cocapods:
 
 ```
 pod install

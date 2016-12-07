@@ -73,28 +73,50 @@ class RabbitMqConnection extends ReactContextBaseJavaModule {
         this.factory.setAutomaticRecoveryEnabled(true);
 
         try {
-            
             this.connection = factory.newConnection();
-
-            this.connection.addShutdownListener(new ShutdownListener() {
-                @Override
-                public void shutdownCompleted(ShutdownSignalException cause) {
-                    Log.e("RabbitMqConnection", "Shutdown signal received " + cause);
-                    onClose(cause);
-                }
-            });
-
-            this.channel = connection.createChannel();
-            this.channel.basicQos(1);
-
         } catch (Exception e){
 
-            Log.e("RabbitMqConnection", "Create channel error " + e);
-            e.printStackTrace();
+            WritableMap event = Arguments.createMap();
+            event.putString("name", "error");
+            event.putString("type", "failedtoconnect");
+            event.putString("code", "");
+            event.putString("description", e.getMessage());
+
+            this.context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit("RabbitMqConnectionEvent", event);
+
+            Log.e("RabbitMqConnection +++++++++++++++++ ", "Connection error " + e.getMessage());
+          
 
         } finally { 
             this.connection = null; 
         } 
+
+        if (this.connection != null){
+            try {
+
+                this.connection.addShutdownListener(new ShutdownListener() {
+                    @Override
+                    public void shutdownCompleted(ShutdownSignalException cause) {
+                        Log.e("RabbitMqConnection", "Shutdown signal received " + cause);
+                        onClose(cause);
+                    }
+                });
+
+                this.channel = connection.createChannel();
+                this.channel.basicQos(1);
+
+                WritableMap event = Arguments.createMap();
+                event.putString("name", "connected");
+
+                this.context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit("RabbitMqConnectionEvent", event);
+
+            } catch (Exception e){
+
+                Log.e("RabbitMqConnectionChannel", "Create channel error " + e);
+                e.printStackTrace();
+
+            } 
+        }
 
     }
 

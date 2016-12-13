@@ -8,7 +8,9 @@ import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.bridge.ReadableType;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
+import com.facebook.react.bridge.ReadableMapKeySetIterator;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.AMQP;
@@ -21,29 +23,34 @@ public class RabbitMqQueue {
     public Boolean exclusive;
     public Boolean durable;
     public Boolean autodelete;
+    public ReadableMap consumer_arguments;
        
     private ReactApplicationContext context;
 
     private Channel channel;
     private RabbitMqExchange exchange;
 
-    public RabbitMqQueue (ReactApplicationContext context, Channel channel, ReadableMap queue_condig){
+    public RabbitMqQueue (ReactApplicationContext context, Channel channel, ReadableMap queue_condig, ReadableMap arguments){
        
         this.context = context;
         this.channel = channel;
-
+        Log.e("RabbitMqQueue", "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
         this.name = queue_condig.getString("name");
         this.exclusive = (queue_condig.hasKey("exclusive") ? queue_condig.getBoolean("exclusive") : false);
         this.durable = (queue_condig.hasKey("durable") ? queue_condig.getBoolean("durable") : true);
         this.autodelete = (queue_condig.hasKey("autoDelete") ? queue_condig.getBoolean("autoDelete") : false);
-       
-        Map<String, Object> args = new HashMap<String, Object>();
+        
+        this.consumer_arguments = (queue_condig.hasKey("consume_arguments") ? queue_condig.getMap("consume_arguments") : null);
+
+        Map<String, Object> args = toHashMap(arguments);
 
         try {
             RabbitMqConsumer consumer = new RabbitMqConsumer(this.channel, this);
 
+            Map<String, Object> consumer_args = toHashMap(this.consumer_arguments);
+
             this.channel.queueDeclare(this.name, this.durable, this.exclusive, this.autodelete, args);
-            this.channel.basicConsume(this.name, false, consumer);
+            this.channel.basicConsume(this.name, false, consumer_args, consumer);
 
         } catch (Exception e){
             Log.e("RabbitMqQueue", "Queue error " + e);
@@ -128,4 +135,46 @@ public class RabbitMqQueue {
             e.printStackTrace();
         }
     } 
+
+
+    private Map<String, Object> toHashMap(ReadableMap data){
+
+        ReadableMapKeySetIterator iterator = data.keySetIterator();
+
+        Map<String, Object> args = new HashMap<String, Object>();
+
+        while (iterator.hasNextKey()) {
+            String key = iterator.nextKey();
+
+            ReadableType readableType = data.getType(key);
+
+            switch (readableType) {
+                case Null:
+                    args.put(key, key);
+                    break;
+                case Boolean:
+                    args.put(key, data.getBoolean(key));
+                    break;
+                case Number:
+                    // Can be int or double.
+                    double tmp = data.getDouble(key);
+                    if (tmp == (int) tmp) {
+                        args.put(key, (int) tmp);
+                    } else {
+                        args.put(key, tmp);
+                    }
+                    Log.e("RabbitMqQueue", "***");
+                    break;
+                case String:
+                    Log.e("RabbitMqQueue", data.getString(key));
+                    args.put(key, data.getString(key));
+                    break;
+
+            }
+        }
+
+
+        return args;
+    }
+
 }

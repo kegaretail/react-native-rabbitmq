@@ -24,7 +24,7 @@ import com.rabbitmq.client.Consumer;
 import com.rabbitmq.client.ShutdownListener; 
 import com.rabbitmq.client.ShutdownSignalException; 
 
-class RabbitMqConnection extends ReactContextBaseJavaModule {
+class RabbitMqConnection extends ReactContextBaseJavaModule  {
 
     private ReactApplicationContext context;
 
@@ -50,10 +50,20 @@ class RabbitMqConnection extends ReactContextBaseJavaModule {
     public String getName() {
         return "RabbitMqConnection";
     }
-    
+
     @ReactMethod
     public void initialize(ReadableMap config) {
         this.config = config;
+
+        this.factory = new ConnectionFactory();
+        this.factory.setUsername(this.config.getString("username"));
+        this.factory.setPassword(this.config.getString("password"));
+        this.factory.setVirtualHost(this.config.getString("virtualhost"));
+        this.factory.setHost(this.config.getString("host"));
+        this.factory.setPort(this.config.getInt("port"));
+        this.factory.setAutomaticRecoveryEnabled(false);
+        this.factory.setRequestedHeartbeat(60);
+
     }
 
     @ReactMethod
@@ -64,65 +74,62 @@ class RabbitMqConnection extends ReactContextBaseJavaModule {
     @ReactMethod
     public void connect() {
 
-        this.factory = new ConnectionFactory();
-        this.factory.setUsername(this.config.getString("username"));
-        this.factory.setPassword(this.config.getString("password"));
-        this.factory.setVirtualHost(this.config.getString("virtualhost"));
-        this.factory.setHost(this.config.getString("host"));
-        this.factory.setPort(this.config.getInt("port"));
-        this.factory.setAutomaticRecoveryEnabled(true);
-
-        try {
-            this.connection = factory.newConnection();
-        } catch (Exception e){
-
+        if (this.connection != null && this.connection.isOpen()){
             WritableMap event = Arguments.createMap();
-            event.putString("name", "error");
-            event.putString("type", "failedtoconnect");
-            event.putString("code", "");
-            event.putString("description", e.getMessage());
+            event.putString("name", "connected");
 
             this.context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit("RabbitMqConnectionEvent", event);
+        }else{ 
 
-            Log.e("RabbitMqConnection +++++++++++++++++ ", "Connection error " + e.getMessage());
-          
-
-        } finally { 
-            this.connection = null; 
-        } 
-
-        if (this.connection != null){
             try {
-
-                this.connection.addShutdownListener(new ShutdownListener() {
-                    @Override
-                    public void shutdownCompleted(ShutdownSignalException cause) {
-                        Log.e("RabbitMqConnection", "Shutdown signal received " + cause);
-                        onClose(cause);
-                    }
-                });
-
-                this.channel = connection.createChannel();
-                this.channel.basicQos(1);
+                this.connection = factory.newConnection();
+            } catch (Exception e){
 
                 WritableMap event = Arguments.createMap();
-                event.putString("name", "connected");
+                event.putString("name", "error");
+                event.putString("type", "failedtoconnect");
+                event.putString("code", "");
+                event.putString("description", e.getMessage());
 
                 this.context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit("RabbitMqConnectionEvent", event);
 
-            } catch (Exception e){
+                this.connection = null; 
 
-                Log.e("RabbitMqConnectionChannel", "Create channel error " + e);
-                e.printStackTrace();
+            }
 
-            } 
+            if (this.connection != null){
+
+                try {
+
+                    this.connection.addShutdownListener(new ShutdownListener() {
+                        @Override
+                        public void shutdownCompleted(ShutdownSignalException cause) {
+                            Log.e("RabbitMqConnection", "Shutdown signal received " + cause);
+                            onClose(cause);
+                        }
+                    });
+
+                    this.channel = connection.createChannel();
+                    this.channel.basicQos(1);
+
+                    WritableMap event = Arguments.createMap();
+                    event.putString("name", "connected");
+
+                    this.context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit("RabbitMqConnectionEvent", event);
+
+                } catch (Exception e){
+
+                    Log.e("RabbitMqConnectionChannel", "Create channel error " + e);
+                    e.printStackTrace();
+
+                } 
+            }
         }
-
     }
 
     @ReactMethod
-    public void addQueue(ReadableMap queue_condig) {
-        RabbitMqQueue queue = new RabbitMqQueue(this.context, this.channel, queue_condig);
+    public void addQueue(ReadableMap queue_condig, ReadableMap arguments) {
+        RabbitMqQueue queue = new RabbitMqQueue(this.context, this.channel, queue_condig, arguments);
         this.queues.add(queue);
     }
 

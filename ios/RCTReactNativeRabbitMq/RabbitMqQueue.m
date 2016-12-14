@@ -45,8 +45,23 @@ RCT_EXPORT_MODULE();
         }
 
         self.queue = [self.channel queue:self.name options:self.options];
+        
 
-        [self.queue subscribe:^(RMQMessage * _Nonnull message) {
+        NSDictionary *tmp_arguments = @{@"x-priority": [[RMQLong alloc] init:15]};
+        if ([config objectForKey:@"consumer_arguments"] != nil){
+            NSDictionary *consumer_arguments = [config objectForKey:@"consumer_arguments"];
+            if ([consumer_arguments objectForKey:@"x-priority"] != nil){
+                tmp_arguments = @{@"x-priority": [[RMQLong alloc] init:[[consumer_arguments objectForKey:@"x-priority"] integerValue]]};
+            }
+        }
+
+        RMQBasicConsumeOptions consumer_options = RMQBasicConsumeNoOptions;
+
+        RMQTable *arguments = [[RMQTable alloc] init:tmp_arguments];
+
+        [self.queue subscribe:consumer_options
+                    arguments:arguments
+                    handler:^(RMQMessage * _Nonnull message) {
 
             NSString *body = [[NSString alloc] initWithData:message.body encoding:NSUTF8StringEncoding];
 
@@ -54,11 +69,11 @@ RCT_EXPORT_MODULE();
                 body:@{
                     @"name": @"message", 
                     @"queue_name": self.name, 
-                    @"body": body, 
+                    @"message": body, 
                     @"routingKey": message.routingKey, 
-                    @"exchangeName": message.exchangeName,
-                    @"consumerTag": message.consumerTag, 
-                    @"deliveryTag": message.deliveryTag
+                    @"exchange": message.exchangeName,
+                    @"consumer_tag": message.consumerTag, 
+                    @"delivery_tag": message.deliveryTag
                 }
             ];
         }];

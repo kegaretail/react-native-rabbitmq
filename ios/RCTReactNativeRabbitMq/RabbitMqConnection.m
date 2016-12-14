@@ -21,8 +21,8 @@ RCT_EXPORT_METHOD(initialize:(NSDictionary *) config)
 
     self.connected = false;
 
-    self.queues = [[NSMutableArray alloc]init];
-    self.exchanges = [[NSMutableArray alloc]init];
+    self.queues = [[NSMutableArray alloc] init];
+    self.exchanges = [[NSMutableArray alloc] init];
 }
 
 RCT_EXPORT_METHOD(connect)
@@ -31,7 +31,15 @@ RCT_EXPORT_METHOD(connect)
     RabbitMqDelegateLogger *delegate = [[RabbitMqDelegateLogger alloc] initWithBridge:self.bridge];
 
     NSString *uri = [NSString stringWithFormat:@"amqp://%@:%@@%@:%@/%@", self.config[@"username"], self.config[@"password"], self.config[@"host"], self.config[@"port"], self.config[@"virtualhost"]];
-    self.connection = [[RMQConnection alloc] initWithUri:uri verifyPeer:true delegate:delegate];
+    //self.connection = [[RMQConnection alloc] initWithUri:uri verifyPeer:true delegate:delegate];
+
+    self.connection = [[RMQConnection alloc] initWithUri:uri 
+                                              channelMax:@65535 
+                                                frameMax:@(RMQFrameMax) 
+                                               heartbeat:@10
+                                             syncTimeout:@10 
+                                                delegate:delegate
+                                           delegateQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)];
 
     [self.connection start:^{ 
         
@@ -47,7 +55,7 @@ RCT_EXPORT_METHOD(close)
     [self.connection close];
 }
 
-RCT_EXPORT_METHOD(addQueue:(NSDictionary *) config)
+RCT_EXPORT_METHOD(addQueue:(NSDictionary *) config arguments:(NSDictionary *)arguments)
 {
     if (self.connected){ 
         self.channel = [self.connection createChannel];
@@ -124,6 +132,7 @@ RCT_EXPORT_METHOD(addExchange:(NSDictionary *) config)
 
 RCT_EXPORT_METHOD(publishToExchange:(NSString *)message exchange_name:(NSString *)exchange_name routing_key:(NSString *)routing_key)
 {
+
     id exchange_id = [self findExchange:exchange_name];
 
     if (exchange_id != nil){
@@ -146,7 +155,7 @@ RCT_EXPORT_METHOD(deleteExchange:(NSString *)exchange_name)
 -(id) findQueue:(NSString *)name {
     id queue_id = nil;
     for(id q in self.queues) {
-        if ([q name] == name){ queue_id = q; }
+        if ([[q name] isEqualToString:name]){ queue_id = q; }
     }
     return queue_id;
 }
@@ -154,8 +163,9 @@ RCT_EXPORT_METHOD(deleteExchange:(NSString *)exchange_name)
 -(id) findExchange:(NSString *)name {
     id exchange_id = nil;
     for(id e in self.exchanges) {
-        if ([e name] == name){ exchange_id = e; }
+        if ([[e name] isEqualToString:name]){ exchange_id = e; }
     }
+
     return exchange_id;
 }
 

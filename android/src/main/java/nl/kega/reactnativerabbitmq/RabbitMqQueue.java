@@ -34,13 +34,13 @@ public class RabbitMqQueue {
        
         this.context = context;
         this.channel = channel;
-        Log.e("RabbitMqQueue", "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+
         this.name = queue_condig.getString("name");
         this.exclusive = (queue_condig.hasKey("exclusive") ? queue_condig.getBoolean("exclusive") : false);
         this.durable = (queue_condig.hasKey("durable") ? queue_condig.getBoolean("durable") : true);
         this.autodelete = (queue_condig.hasKey("autoDelete") ? queue_condig.getBoolean("autoDelete") : false);
         
-        this.consumer_arguments = (queue_condig.hasKey("consume_arguments") ? queue_condig.getMap("consume_arguments") : null);
+        this.consumer_arguments = (queue_condig.hasKey("consumer_arguments") ? queue_condig.getMap("consumer_arguments") : null);
 
         Map<String, Object> args = toHashMap(arguments);
 

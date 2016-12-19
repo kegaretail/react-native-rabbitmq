@@ -47,11 +47,11 @@ RCT_EXPORT_MODULE();
         self.queue = [self.channel queue:self.name options:self.options];
         
 
-        NSDictionary *tmp_arguments = @{@"x-priority": [[RMQLong alloc] init:15]};
+        NSDictionary *tmp_arguments = @{};
         if ([config objectForKey:@"consumer_arguments"] != nil){
             NSDictionary *consumer_arguments = [config objectForKey:@"consumer_arguments"];
             if ([consumer_arguments objectForKey:@"x-priority"] != nil){
-                tmp_arguments = @{@"x-priority": [[RMQLong alloc] init:[[consumer_arguments objectForKey:@"x-priority"] integerValue]]};
+                tmp_arguments = @{@"x-priority": [[RMQDouble alloc] init:[[consumer_arguments objectForKey:@"x-priority"] integerValue]]};
             }
         }
 

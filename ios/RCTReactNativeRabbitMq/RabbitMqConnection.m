@@ -124,9 +124,21 @@ RCT_EXPORT_METHOD(addExchange:(NSDictionary *) config)
         options = options | RMQExchangeDeclareNoWait;
     }
 
-    RMQExchange *exchange = [self.channel fanout:[config objectForKey:@"name"] options:options];
+    
+    NSString *type = [config objectForKey:@"type"];
 
-    [self.exchanges addObject:exchange];
+    RMQExchange *exchange = nil;
+    if ([type isEqualToString:@"fanout"]) {
+        exchange = [self.channel fanout:[config objectForKey:@"name"] options:options];
+    }else if ([type isEqualToString:@"direct"]) {
+        exchange = [self.channel direct:[config objectForKey:@"name"] options:options];
+    }else if ([type isEqualToString:@"topic"]) {
+        exchange = [self.channel topic:[config objectForKey:@"name"] options:options];
+    }
+    
+    if (exchange != nil){
+        [self.exchanges addObject:exchange];
+    }
 
 }
 

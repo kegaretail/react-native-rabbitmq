@@ -51,7 +51,7 @@ RCT_EXPORT_MODULE();
         if ([config objectForKey:@"consumer_arguments"] != nil){
             NSDictionary *consumer_arguments = [config objectForKey:@"consumer_arguments"];
             if ([consumer_arguments objectForKey:@"x-priority"] != nil){
-                tmp_arguments = @{@"x-priority": [[RMQDouble alloc] init:[[consumer_arguments objectForKey:@"x-priority"] integerValue]]};
+                tmp_arguments = @{@"x-priority": [[RMQSignedShort alloc] init:[[consumer_arguments objectForKey:@"x-priority"] integerValue]]};
             }
         }
 
@@ -64,6 +64,8 @@ RCT_EXPORT_MODULE();
                     handler:^(RMQMessage * _Nonnull message) {
 
             NSString *body = [[NSString alloc] initWithData:message.body encoding:NSUTF8StringEncoding];
+
+            [self.channel ack:message.deliveryTag];
 
             [self.bridge.eventDispatcher sendAppEventWithName:@"RabbitMqQueueEvent" 
                 body:@{
@@ -105,6 +107,8 @@ RCT_EXPORT_MODULE();
     [self.queue delete:self.options];
 }
 
-
+-(void) ack:(NSNumber *)deliveryTag {
+    [self.channel ack:deliveryTag];
+}
 
 @end

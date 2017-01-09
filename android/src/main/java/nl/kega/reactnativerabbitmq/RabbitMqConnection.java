@@ -232,12 +232,20 @@ class RabbitMqConnection extends ReactContextBaseJavaModule  {
     @ReactMethod
     public void close() {
         try {
+
+            this.queues = new ArrayList<RabbitMqQueue>();
+            this.exchanges = new ArrayList<RabbitMqExchange>(); 
+            
+            this.channel.close();
+
             this.connection.close();
          } catch (Exception e){
             Log.e("RabbitMqConnection", "Connection closing error " + e);
             e.printStackTrace();
         } finally { 
             this.connection = null; 
+            this.factory = null;
+            this.channel = null;
         } 
     }
 

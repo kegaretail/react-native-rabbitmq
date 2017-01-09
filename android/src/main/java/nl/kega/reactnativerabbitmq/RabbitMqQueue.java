@@ -59,7 +59,7 @@ public class RabbitMqQueue {
     }
 
     public void onMessage(WritableMap message){
-        Log.e("RabbitMqConnection", message.getString("message"));
+        Log.e("RabbitMqQueue", message.getString("message"));
 
         message.putString("queue_name", this.name);
 

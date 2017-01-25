@@ -41,7 +41,7 @@ public class RabbitMqQueue {
         this.autodelete = (queue_condig.hasKey("autoDelete") ? queue_condig.getBoolean("autoDelete") : false);
         
         this.consumer_arguments = (queue_condig.hasKey("consumer_arguments") ? queue_condig.getMap("consumer_arguments") : null);
-
+     
         Map<String, Object> args = toHashMap(arguments);
 
         try {
@@ -163,7 +163,6 @@ public class RabbitMqQueue {
                     } else {
                         args.put(key, tmp);
                     }
-                    Log.e("RabbitMqQueue", "***");
                     break;
                 case String:
                     Log.e("RabbitMqQueue", data.getString(key));

@@ -59,3 +59,54 @@ react-native link
 npm install react-native-rabbitmq --save
 
 react-native link
+
+
+## Usage
+```
+cont config = {
+	host:'', 
+	port:5672, 
+	username:'user', 
+	password:'password', 
+	virtualhost:'vhost'
+}
+
+let connection = new Connection(config);
+
+connection.on('error', (event) => {
+
+});
+
+connection.on('connected', (event) => {
+
+	let queue = new Queue( this.connection, {
+		name: 'queue_name', 
+		passive: false,
+		durable: true, 
+		exclusive: false,
+		consumer_arguments: {'x-priority': 1}
+	});
+
+	let system_exchange = new Exchange(connection, {
+		name: 'exchange_name', 
+		type: 'direct', 
+		durable: true, 
+		autoDelete: false,
+		internal: false
+	});
+
+	queue.bind(system_exchange, 'queue_name');
+	
+	// Receive one message when it arrives
+	queue.on('message', (data) => {
+
+	});
+	
+	// Receive all messages send with in a second
+	queue.on('messages', (data) => {
+
+	});
+
+});
+```
+

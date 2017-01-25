@@ -31,7 +31,7 @@ $(SRCROOT)/Pods
 ```
 
 
-You need to change 2 lines, to make it work:
+You need to change some things, to make it work:
 
 ios\Pods\RMQClient\RMQClient\RMQValues.h Line 53
 ```
@@ -40,6 +40,21 @@ ios\Pods\RMQClient\RMQClient\RMQValues.h Line 53
 to
 ```
 #import "JKVValue.h"
+```
+
+ios\Pods\JKVValue\JKVValue\Public\JKVValue.h
+```
+#import <JKVValue/JKVValueImpl.h>
+#import <JKVValue/JKVMutableValue.h>
+#import <JKVValue/JKVObjectPrinter.h>
+#import <JKVValue/JKVFactory.h>
+```
+to
+```
+#import "JKVValueImpl.h"
+#import "JKVMutableValue.h"
+#import "JKVObjectPrinter.h"
+#import "JKVFactory.h"
 ```
 
 ios\Pods\RMQClient\RMQClient\RMQTCPSocketTransport.h

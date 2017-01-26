@@ -16,10 +16,10 @@ npm install react-native-rabbitmq --save
 ```
 use_frameworks!
 ```
-2. Add the following to your Podfile:
+2. Add the following to your Podfile, use master because needed fix is not a tag:
 
 ```
-pod 'RMQClient', '~> 0.10.0'
+pod 'RMQClient', :git => 'https://github.com/rabbitmq/rabbitmq-objc-client.git'
 ```
 3. Instal the cocapods:
 

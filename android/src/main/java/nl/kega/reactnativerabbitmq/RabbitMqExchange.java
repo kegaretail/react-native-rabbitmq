@@ -53,8 +53,9 @@ public class RabbitMqExchange {
             byte[] message_body_bytes = message.getBytes();
 
             AMQP.BasicProperties properties = new AMQP.BasicProperties();
-            //properties.setExpiration("60000");
-       
+
+            // AMQP.BasicProperties properties = new BasicProperties.Builder().expiration("60000").build();
+
             this.channel.basicPublish(this.name, routing_key, properties, message_body_bytes);
         } catch (Exception e){
             Log.e("RabbitMqExchange", "Exchange publish error " + e);

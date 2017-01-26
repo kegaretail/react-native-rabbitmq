@@ -82,6 +82,11 @@
     "type": "git",
     "url": "git+https://github.com/kegaretail/react-native-rabbitmq.git"
   },
+  "rnpm": {
+    "commands": {
+      "prelink": "node ./node_modules/react-native-rabbitmq/scripts/prelink.js"
+    }
+  },
   "scripts": {},
-  "version": "0.4.3"
+  "version": "0.5.0"
 }

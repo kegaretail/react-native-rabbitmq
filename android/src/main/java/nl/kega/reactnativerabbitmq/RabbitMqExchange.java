@@ -48,15 +48,30 @@ public class RabbitMqExchange {
 
     }
 
-    public void publish(String message, String routing_key){ 
+    public void publish(String message, String routing_key, ReadableMap message_properties){ 
         try {
             byte[] message_body_bytes = message.getBytes();
 
-            AMQP.BasicProperties properties = new AMQP.BasicProperties();
+            AMQP.BasicProperties.Builder properties = new AMQP.BasicProperties.Builder();
 
-            // AMQP.BasicProperties properties = new BasicProperties.Builder().expiration("60000").build();
+            if (message_properties != null){
+                if (message_properties.hasKey("content_type")){properties.contentType(message_properties.getString("content_type"));}
+                if (message_properties.hasKey("content_encoding")){properties.contentEncoding(message_properties.getString("content_encoding"));}
+                if (message_properties.hasKey("delivery_mode")){properties.deliveryMode(message_properties.getInt("delivery_mode"));}
+                if (message_properties.hasKey("priority")){properties.priority(message_properties.getInt("priority"));}
+                if (message_properties.hasKey("correlation_id")){properties.correlationId(message_properties.getString("correlation_id"));}
+                if (message_properties.hasKey("expiration")){ properties.expiration(message_properties.getString("expiration"));}
+                if (message_properties.hasKey("message_id")){properties.messageId(message_properties.getString("message_id"));}
+                if (message_properties.hasKey("type")){properties.type(message_properties.getString("type"));}
+                if (message_properties.hasKey("user_id")){properties.userId(message_properties.getString("user_id"));}
+                if (message_properties.hasKey("app_id")){properties.appId(message_properties.getString("app_id"));}
+                if (message_properties.hasKey("reply_to")){properties.replyTo(message_properties.getString("reply_to"));}
 
-            this.channel.basicPublish(this.name, routing_key, properties, message_body_bytes);
+                //if (message_properties.hasKey("timestamp")){properties.timestamp(message_properties.getBoolean("timestamp"));}
+                //if (message_properties.hasKey("headers")){properties.expiration(message_properties.getBoolean("headers"))}
+            }
+            
+            this.channel.basicPublish(this.name, routing_key, properties.build(), message_body_bytes);
         } catch (Exception e){
             Log.e("RabbitMqExchange", "Exchange publish error " + e);
             e.printStackTrace();

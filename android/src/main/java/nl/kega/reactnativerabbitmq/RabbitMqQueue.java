@@ -139,9 +139,13 @@ public class RabbitMqQueue {
 
     private Map<String, Object> toHashMap(ReadableMap data){
 
-        ReadableMapKeySetIterator iterator = data.keySetIterator();
-
         Map<String, Object> args = new HashMap<String, Object>();
+
+        if (data == null){
+            return args;
+        }
+
+        ReadableMapKeySetIterator iterator = data.keySetIterator();
 
         while (iterator.hasNextKey()) {
             String key = iterator.nextKey();

@@ -51,7 +51,8 @@ RCT_EXPORT_MODULE();
         if ([config objectForKey:@"consumer_arguments"] != nil){
             NSDictionary *consumer_arguments = [config objectForKey:@"consumer_arguments"];
             if ([consumer_arguments objectForKey:@"x-priority"] != nil){
-                tmp_arguments = @{@"x-priority": [[RMQSignedShort alloc] init:[[consumer_arguments objectForKey:@"x-priority"] integerValue]]};
+                NSNumber *xpriority = [consumer_arguments objectForKey:@"x-priority"];
+                tmp_arguments = @{@"x-priority": [[RMQSignedShort alloc] init:xpriority]};
             }
         }
 

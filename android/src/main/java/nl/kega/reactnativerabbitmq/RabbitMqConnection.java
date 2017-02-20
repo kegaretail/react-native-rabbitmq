@@ -205,12 +205,12 @@ class RabbitMqConnection extends ReactContextBaseJavaModule  {
     }
 
     @ReactMethod
-    public void publishToExchange(String message, String exchange_name, String routing_key) {
+    public void publishToExchange(String message, String exchange_name, String routing_key, ReadableMap message_properties) {
 
          for (RabbitMqExchange exchange : exchanges) {
 		    if (Objects.equals(exchange_name, exchange.name)){
                 Log.e("RabbitMqConnection", "Exchange publish: " + message);
-                exchange.publish(message, routing_key);
+                exchange.publish(message, routing_key, message_properties);
                 return;
             }
 		}

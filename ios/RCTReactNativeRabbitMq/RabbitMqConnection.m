@@ -141,15 +141,31 @@ RCT_EXPORT_METHOD(addExchange:(NSDictionary *) config)
     }
 
 }
-
-RCT_EXPORT_METHOD(publishToExchange:(NSString *)message exchange_name:(NSString *)exchange_name routing_key:(NSString *)routing_key)
+ 
+RCT_EXPORT_METHOD(publishToExchange:(NSString *)message exchange_name:(NSString *)exchange_name routing_key:(NSString *)routing_key message_properties:(NSDictionary *)message_properties)
 {
 
     id exchange_id = [self findExchange:exchange_name];
 
     if (exchange_id != nil){
+
         NSData* data = [message dataUsingEncoding:NSUTF8StringEncoding];
-        [exchange_id publish:data routingKey:routing_key];
+
+        NSMutableArray *properties = [[NSMutableArray alloc] init];
+
+        if ([message_properties objectForKey:@"content_type"] != nil){[properties addObject:[[RMQBasicContentType alloc] init:[[message_properties objectForKey:@"content_type"] stringValue]]];}
+        if ([message_properties objectForKey:@"content_encoding"] != nil){[properties addObject:[[RMQBasicContentEncoding alloc] init:[[message_properties objectForKey:@"content_encoding"] stringValue]]];}
+        if ([message_properties objectForKey:@"delivery_mode"] != nil){[properties addObject:[[RMQBasicDeliveryMode alloc] init:[[message_properties objectForKey:@"delivery_mode"] intValue]]];}
+        if ([message_properties objectForKey:@"priority"] != nil){[properties addObject:[[RMQBasicPriority alloc] init:[[message_properties objectForKey:@"priority"] intValue]]];}
+        if ([message_properties objectForKey:@"correlation_id"] != nil){[properties addObject:[[RMQBasicCorrelationId alloc] init:[[message_properties objectForKey:@"correlation_id"] stringValue]]];}
+        if ([message_properties objectForKey:@"expiration"] != nil){[properties addObject:[[RMQBasicExpiration alloc] init:[[message_properties objectForKey:@"expiration"] stringValue]]];}
+        if ([message_properties objectForKey:@"message_id"] != nil){[properties addObject:[[RMQBasicMessageId alloc] init:[[message_properties objectForKey:@"message_id"] stringValue]]];}
+        if ([message_properties objectForKey:@"type"] != nil){[properties addObject:[[RMQBasicType alloc] init:[[message_properties objectForKey:@"type"] stringValue]]];}
+        if ([message_properties objectForKey:@"user_id"] != nil){[properties addObject:[[RMQBasicUserId alloc] init:[[message_properties objectForKey:@"user_id"] stringValue]]];}
+        if ([message_properties objectForKey:@"app_id"] != nil){[properties addObject:[[RMQBasicAppId alloc] init:[[message_properties objectForKey:@"app_id"] stringValue]]];}
+        if ([message_properties objectForKey:@"reply_to"] != nil){[properties addObject:[[RMQBasicReplyTo alloc] init:[[message_properties objectForKey:@"reply_to"] stringValue]]];}
+
+        [exchange_id publish:data routingKey:routing_key properties:properties options:RMQBasicPublishNoOptions];
     }
 }
 

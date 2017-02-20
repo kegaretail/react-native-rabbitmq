@@ -106,7 +106,7 @@ connection.on('connected', (event) => {
 		consumer_arguments: {'x-priority': 1}
 	});
 
-	let system_exchange = new Exchange(connection, {
+	let exchange = new Exchange(connection, {
 		name: 'exchange_name', 
 		type: 'direct', 
 		durable: true, 
@@ -127,5 +127,13 @@ connection.on('connected', (event) => {
 	});
 
 });
+
+let message = 'test';
+let routing_key = '';
+let properties = {
+	expiration: 10000
+}
+exchange.publish(data, routing_key, properties)
+
 ```
 

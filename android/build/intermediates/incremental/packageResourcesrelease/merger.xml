@@ -1,2 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="C:\GitHub\rnapp\node_modules\react-native-rabbitmq\android\src\main\res"/><source path="C:\GitHub\rnapp\node_modules\react-native-rabbitmq\android\build\generated\res\rs\release"/><source path="C:\GitHub\rnapp\node_modules\react-native-rabbitmq\android\build\generated\res\resValues\release"/></dataSet><dataSet config="release"><source path="C:\GitHub\rnapp\node_modules\react-native-rabbitmq\android\src\release\res"/></dataSet><mergedItems/></merger>

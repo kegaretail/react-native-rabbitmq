@@ -73,7 +73,7 @@ public class RabbitMqExchange {
                     if (message_properties.hasKey("correlation_id") && message_properties.getType("correlation_id") == ReadableType.String){
                         properties.correlationId(message_properties.getString("correlation_id"));
                     }
-                    if (message_properties.hasKey("expiration") && message_properties.getType("correlation_id") == ReadableType.String){ 
+                    if (message_properties.hasKey("expiration") && message_properties.getType("expiration") == ReadableType.String){ 
                         properties.expiration(message_properties.getString("expiration"));
                     }
                     if (message_properties.hasKey("message_id") && message_properties.getType("message_id") == ReadableType.String){

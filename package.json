@@ -11,16 +11,28 @@
         "type": "tag"
       },
       "C:\\GitHub\\rnapp"
+    ],
+    [
+      {
+        "raw": "react-native-rabbitmq@^0.5.7",
+        "scope": null,
+        "escapedName": "react-native-rabbitmq",
+        "name": "react-native-rabbitmq",
+        "rawSpec": "^0.5.7",
+        "spec": ">=0.5.7 <0.6.0",
+        "type": "range"
+      },
+      "C:\\GitHub\\MOBILE_winkelfocus2"
     ]
   ],
-  "_from": "react-native-rabbitmq@latest",
-  "_id": "react-native-rabbitmq@0.0.1",
+  "_from": "react-native-rabbitmq@^0.5.7",
+  "_id": "react-native-rabbitmq@0.5.7",
   "_inCache": true,
   "_location": "/react-native-rabbitmq",
   "_nodeVersion": "7.0.0",
   "_npmOperationalInternal": {
     "host": "packages-18-east.internal.npmjs.com",
-    "tmp": "tmp/react-native-rabbitmq-0.0.1.tgz_1478075892614_0.40764762787148356"
+    "tmp": "tmp/react-native-rabbitmq-0.5.7.tgz_1488187459385_0.1154757144395262"
   },
   "_npmUser": {
     "name": "timhonders",
@@ -29,23 +41,22 @@
   "_npmVersion": "3.10.8",
   "_phantomChildren": {},
   "_requested": {
-    "raw": "react-native-rabbitmq",
+    "raw": "react-native-rabbitmq@^0.5.7",
     "scope": null,
     "escapedName": "react-native-rabbitmq",
     "name": "react-native-rabbitmq",
-    "rawSpec": "",
-    "spec": "latest",
-    "type": "tag"
+    "rawSpec": "^0.5.7",
+    "spec": ">=0.5.7 <0.6.0",
+    "type": "range"
   },
   "_requiredBy": [
-    "#USER",
     "/"
   ],
-  "_resolved": "https://registry.npmjs.org/react-native-rabbitmq/-/react-native-rabbitmq-0.0.1.tgz",
-  "_shasum": "03303b62544df03d33d3088830d02fa3be3697c6",
+  "_resolved": "https://registry.npmjs.org/react-native-rabbitmq/-/react-native-rabbitmq-0.5.7.tgz",
+  "_shasum": "057655ce83b146f93f8840254d71382fcc5bce71",
   "_shrinkwrap": null,
-  "_spec": "react-native-rabbitmq",
-  "_where": "C:\\GitHub\\rnapp",
+  "_spec": "react-native-rabbitmq@^0.5.7",
+  "_where": "C:\\GitHub\\MOBILE_winkelfocus2",
   "author": {
     "name": "Tim Honders"
   },
@@ -57,8 +68,8 @@
   "devDependencies": {},
   "directories": {},
   "dist": {
-    "shasum": "03303b62544df03d33d3088830d02fa3be3697c6",
-    "tarball": "https://registry.npmjs.org/react-native-rabbitmq/-/react-native-rabbitmq-0.0.1.tgz"
+    "shasum": "057655ce83b146f93f8840254d71382fcc5bce71",
+    "tarball": "https://registry.npmjs.org/react-native-rabbitmq/-/react-native-rabbitmq-0.5.7.tgz"
   },
   "gitHead": "bf5e3cefd92e36fab4da1b02d66a5352484c056c",
   "homepage": "https://github.com/kegaretail/react-native-rabbitmq",
@@ -88,5 +99,5 @@
     }
   },
   "scripts": {},
-  "version": "0.5.10"
+  "version": "0.5.7"
 }

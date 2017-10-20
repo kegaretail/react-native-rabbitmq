@@ -198,9 +198,19 @@ class RabbitMqConnection extends ReactContextBaseJavaModule  {
     }
 
     @ReactMethod
-    public void removeQueue() {
-      
+    public void removeQueue(String queue_name) {
+        RabbitMqQueue found_queue = null;
+        for (RabbitMqQueue queue : queues) {
+		    if (Objects.equals(queue_name, queue.name)){
+                found_queue = queue;
+            }
+        }
+
+        if (!found_queue.equals(null)){
+            found_queue.delete();
+        }
     }
+
     /*
     @ReactMethod
     public void publishToQueue(String message, String exchange_name, String routing_key) {

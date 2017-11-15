@@ -82,7 +82,7 @@ react-native link
 
 ## Usage
 ```
-cont config = {
+const config = {
 	host:'', 
 	port:5672, 
 	username:'user', 
@@ -114,7 +114,7 @@ connection.on('connected', (event) => {
 		internal: false
 	});
 
-	queue.bind(system_exchange, 'queue_name');
+	queue.bind(exchange, 'queue_name');
 	
 	// Receive one message when it arrives
 	queue.on('message', (data) => {

@@ -3,6 +3,7 @@ package nl.kega.reactnativerabbitmq;
 import android.util.Log;
 
 import java.io.IOException;
+import java.lang.NullPointerException;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -206,9 +207,14 @@ class RabbitMqConnection extends ReactContextBaseJavaModule  {
             }
         }
 
-        if (!found_queue.equals(null)){
-            found_queue.delete();
-        }
+        try {
+            if (!found_queue.equals(null)){
+                found_queue.delete();
+            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        } 
+        
     }
 
     /*

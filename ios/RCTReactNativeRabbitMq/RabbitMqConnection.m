@@ -98,6 +98,14 @@ RCT_EXPORT_METHOD(removeQueue:(NSString *)queue_name)
     }
 }
 
+RCT_EXPORT_METHOD(basicAck:(NSString *)queue_name delivery_tag:(nonnull NSNumber *)delivery_tag)
+{
+    id queue_id = [self findQueue:queue_name];
+
+    if (queue_id != nil){
+        [queue_id ack:delivery_tag];
+    }
+}
 
 RCT_EXPORT_METHOD(addExchange:(NSDictionary *) config)
 {

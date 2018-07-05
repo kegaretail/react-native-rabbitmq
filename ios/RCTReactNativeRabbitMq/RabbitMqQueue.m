@@ -66,7 +66,7 @@ RCT_EXPORT_MODULE();
 
             NSString *body = [[NSString alloc] initWithData:message.body encoding:NSUTF8StringEncoding];
 
-            [self.channel ack:message.deliveryTag];
+            //[self.channel ack:message.deliveryTag];
 
             [self.bridge.eventDispatcher sendAppEventWithName:@"RabbitMqQueueEvent" 
                 body:@{

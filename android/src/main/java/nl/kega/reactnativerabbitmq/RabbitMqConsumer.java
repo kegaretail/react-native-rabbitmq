@@ -43,10 +43,12 @@ public class RabbitMqConsumer extends DefaultConsumer {
         message_params.putString("routing_key", routing_key);
         message_params.putString("exchange", exchange);
         message_params.putString("content_type", content_type);
+        message_params.putDouble("delivery_tag", envelope.getDeliveryTag());
+        message_params.putBoolean("is_redeliver", is_redeliver);
 
         this.connection.onMessage(message_params);
 
-        this.channel.basicAck(envelope.getDeliveryTag(), false);
+        //this.channel.basicAck(envelope.getDeliveryTag(), false);
     }
 
 

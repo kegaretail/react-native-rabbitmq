@@ -13,6 +13,7 @@ import com.facebook.react.modules.core.DeviceEventManagerModule;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.AMQP;
+import com.rabbitmq.client.AlreadyClosedException;
 
 public class RabbitMqExchange {
 
@@ -105,7 +106,9 @@ public class RabbitMqExchange {
         } catch (Exception e){
             Log.e("RabbitMqExchange", "Exchange publish error " + e);
             e.printStackTrace();
+
         }
+
     }
 
     public void delete(Boolean ifUnused){ 

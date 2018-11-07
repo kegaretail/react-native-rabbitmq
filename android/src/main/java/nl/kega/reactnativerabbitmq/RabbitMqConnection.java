@@ -3,9 +3,9 @@ package nl.kega.reactnativerabbitmq;
 import android.util.Log;
 
 import java.io.IOException;
-import java.lang.NullPointerException;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.concurrent.ExecutionException;
 
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 
@@ -17,6 +17,7 @@ import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.bridge.GuardedAsyncTask;
 
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.Connection;
@@ -27,6 +28,7 @@ import com.rabbitmq.client.ShutdownSignalException;
 import com.rabbitmq.client.RecoveryListener;
 import com.rabbitmq.client.Recoverable;
 import com.rabbitmq.client.RecoverableConnection;
+import com.rabbitmq.client.ConfirmListener;
 
 class RabbitMqConnection extends ReactContextBaseJavaModule  {
 
@@ -34,7 +36,7 @@ class RabbitMqConnection extends ReactContextBaseJavaModule  {
 
     public ReadableMap config;
 
-    private ConnectionFactory factory;
+    private ConnectionFactory factory = null;
     private RecoverableConnection connection;
     private Channel channel;
 
@@ -58,7 +60,7 @@ class RabbitMqConnection extends ReactContextBaseJavaModule  {
     @ReactMethod
     public void initialize(ReadableMap config) {
         this.config = config;
-
+        
         this.factory = new ConnectionFactory();
         this.factory.setUsername(this.config.getString("username"));
         this.factory.setPassword(this.config.getString("password"));
@@ -67,6 +69,7 @@ class RabbitMqConnection extends ReactContextBaseJavaModule  {
         this.factory.setPort(this.config.getInt("port"));
         this.factory.setAutomaticRecoveryEnabled(true);
         this.factory.setRequestedHeartbeat(10);
+        
 
     }
 
@@ -132,6 +135,18 @@ class RabbitMqConnection extends ReactContextBaseJavaModule  {
 
                     this.channel = connection.createChannel();
                     this.channel.basicQos(1);
+
+                    this.channel.addConfirmListener(new ConfirmListener() {
+
+                        public void handleNack(long deliveryTag, boolean multiple) throws IOException {
+                            Log.e("RabbitMqQueue", "Not ack received -------------------------------");
+                        }
+                
+                        public void handleAck(long deliveryTag, boolean multiple) throws IOException {
+                            Log.e("RabbitMqQueue", "Ack received ------------------------------------");
+                        }
+                    });
+
 
                     WritableMap event = Arguments.createMap();
                     event.putString("name", "connected");
@@ -207,14 +222,26 @@ class RabbitMqConnection extends ReactContextBaseJavaModule  {
             }
         }
 
-        try {
-            if (!found_queue.equals(null)){
-                found_queue.delete();
+        if (!found_queue.equals(null)){
+            found_queue.delete();
+        }
+    }
+
+    @ReactMethod
+    public void basicAck(String queue_name, Double delivery_tag) {
+        RabbitMqQueue found_queue = null;
+        for (RabbitMqQueue queue : queues) {
+		    if (Objects.equals(queue_name, queue.name)){
+                found_queue = queue;
             }
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        } 
-        
+        }
+
+        if (!found_queue.equals(null)){
+            long long_delivery_tag = Double.valueOf(delivery_tag).longValue();
+            found_queue.basicAck(long_delivery_tag);
+        }
+
+     
     }
 
     /*
@@ -303,5 +330,22 @@ class RabbitMqConnection extends ReactContextBaseJavaModule  {
         this.context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit("RabbitMqConnectionEvent", event);
     } 
 
+    @Override
+    public void onCatalystInstanceDestroy() {
+
+        // serialize on the AsyncTask thread, and block
+        try {
+            new GuardedAsyncTask<Void, Void>(getReactApplicationContext()) {
+                @Override
+                protected void doInBackgroundGuarded(Void... params) {
+                    close();
+                }
+            }.execute().get();
+        } catch (InterruptedException ioe) {
+            Log.e("RabbitMqConnection", "onCatalystInstanceDestroy", ioe);
+        } catch (ExecutionException ee) {
+            Log.e("RabbitMqConnection", "onCatalystInstanceDestroy", ee);
+        }
+    }
 
 }

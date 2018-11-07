@@ -4,6 +4,8 @@ import android.util.Log;
 import java.util.HashMap;
 import java.util.Map;
 
+import java.io.IOException;
+
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReadableMap;
@@ -19,10 +21,12 @@ public class RabbitMqQueue {
 
     public String name;
     public String routing_key;
+    public String consumer_tag;
     public Boolean passive;
     public Boolean exclusive;
     public Boolean durable;
     public Boolean autodelete;
+    public Boolean autoack;
     public ReadableMap consumer_arguments;
        
     private ReactApplicationContext context;
@@ -39,7 +43,8 @@ public class RabbitMqQueue {
         this.exclusive = (queue_condig.hasKey("exclusive") ? queue_condig.getBoolean("exclusive") : false);
         this.durable = (queue_condig.hasKey("durable") ? queue_condig.getBoolean("durable") : true);
         this.autodelete = (queue_condig.hasKey("autoDelete") ? queue_condig.getBoolean("autoDelete") : false);
-        
+        this.autoack = (queue_condig.hasKey("autoAck") ? queue_condig.getBoolean("autoAck") : false);
+
         this.consumer_arguments = (queue_condig.hasKey("consumer_arguments") ? queue_condig.getMap("consumer_arguments") : null);
      
         Map<String, Object> args = toHashMap(arguments);
@@ -50,7 +55,9 @@ public class RabbitMqQueue {
             Map<String, Object> consumer_args = toHashMap(this.consumer_arguments);
 
             this.channel.queueDeclare(this.name, this.durable, this.exclusive, this.autodelete, args);
-            this.channel.basicConsume(this.name, false, consumer_args, consumer);
+            this.channel.basicConsume(this.name, this.autoack, consumer_args, consumer);
+
+         
 
         } catch (Exception e){
             Log.e("RabbitMqQueue", "Queue error " + e);
@@ -122,7 +129,7 @@ public class RabbitMqQueue {
     } 
 
     public void delete(){ 
-          try {
+        try {
             this.channel.queueDelete(this.name); 
             
             WritableMap event = Arguments.createMap();
@@ -130,7 +137,7 @@ public class RabbitMqQueue {
             event.putString("queue_name", this.name);
 
             this.context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit("RabbitMqQueueEvent", event);
-         } catch (Exception e){
+        } catch (Exception e){
             Log.e("RabbitMqQueue", "Queue delete error " + e);
             e.printStackTrace();
         }
@@ -178,6 +185,15 @@ public class RabbitMqQueue {
 
 
         return args;
+    }
+
+    public void basicAck(long delivery_tag) {
+        try {
+            this.channel.basicAck(delivery_tag, false);
+        } catch (IOException e){
+            Log.e("RabbitMqQueue", "basicAck " + e);
+            e.printStackTrace();
+        }
     }
 
 }

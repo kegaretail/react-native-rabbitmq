@@ -16,6 +16,7 @@ import com.facebook.react.bridge.ReadableMapKeySetIterator;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.AMQP;
+import com.rabbitmq.client.AlreadyClosedException;
 
 public class RabbitMqQueue {
 
@@ -193,7 +194,11 @@ public class RabbitMqQueue {
         } catch (IOException e){
             Log.e("RabbitMqQueue", "basicAck " + e);
             e.printStackTrace();
-        }
+        } catch (AlreadyClosedException e){
+            Log.e("RabbitMqQueue AlreadyClosedException", "basicAck " + e);
+            e.printStackTrace();
+        } 
+  
     }
 
 }

@@ -73,7 +73,7 @@ to
 react-native link
 
 
-## Android 
+## Android
 
 npm install react-native-rabbitmq --save
 
@@ -82,11 +82,13 @@ react-native link
 
 ## Usage
 ```
+import { Connection, Exchange, Queue } from 'react-native-rabbitmq';
+
 const config = {
-	host:'', 
-	port:5672, 
-	username:'user', 
-	password:'password', 
+	host:'',
+	port:5672,
+	username:'user',
+	password:'password',
 	virtualhost:'vhost'
 }
 
@@ -99,28 +101,28 @@ connection.on('error', (event) => {
 connection.on('connected', (event) => {
 
 	let queue = new Queue( this.connection, {
-		name: 'queue_name', 
+		name: 'queue_name',
 		passive: false,
-		durable: true, 
+		durable: true,
 		exclusive: false,
 		consumer_arguments: {'x-priority': 1}
 	});
 
 	let exchange = new Exchange(connection, {
-		name: 'exchange_name', 
-		type: 'direct', 
-		durable: true, 
+		name: 'exchange_name',
+		type: 'direct',
+		durable: true,
 		autoDelete: false,
 		internal: false
 	});
 
 	queue.bind(exchange, 'queue_name');
-	
+
 	// Receive one message when it arrives
 	queue.on('message', (data) => {
 
 	});
-	
+
 	// Receive all messages send with in a second
 	queue.on('messages', (data) => {
 
@@ -136,4 +138,3 @@ let properties = {
 exchange.publish(data, routing_key, properties)
 
 ```
-

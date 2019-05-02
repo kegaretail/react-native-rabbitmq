@@ -73,7 +73,8 @@ RCT_EXPORT_MODULE();
                     @"name": @"message", 
                     @"queue_name": self.name, 
                     @"message": body, 
-                    @"routingKey": message.routingKey, 
+                    @"routingKey": message.routingKey, // Will be deprecated
+                    @"routing_key": message.routingKey, 
                     @"exchange": message.exchangeName,
                     @"consumer_tag": message.consumerTag, 
                     @"delivery_tag": message.deliveryTag

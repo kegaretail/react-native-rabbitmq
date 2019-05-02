@@ -37,6 +37,9 @@ RCT_EXPORT_METHOD(connect)
                                               channelMax:@65535 
                                                 frameMax:@(RMQFrameMax) 
                                                heartbeat:@10
+										  connectTimeout:@15
+											 readTimeout:@30
+										    writeTimeout:@30
                                              syncTimeout:@10 
                                                 delegate:delegate
                                            delegateQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)];

@@ -1,7 +1,4 @@
 ## Todo
-React Native 0.40 fix
-
-
 
 ## Installation
 

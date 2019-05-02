@@ -171,8 +171,8 @@ class RabbitMqConnection extends ReactContextBaseJavaModule  {
     }
 
     @ReactMethod
-    public void addQueue(ReadableMap queue_condig, ReadableMap arguments) {
-        RabbitMqQueue queue = new RabbitMqQueue(this.context, this.channel, queue_condig, arguments);
+    public void addQueue(ReadableMap queue_config, ReadableMap arguments) {
+        RabbitMqQueue queue = new RabbitMqQueue(this.context, this.channel, queue_config, arguments);
         this.queues.add(queue);
     }
 
@@ -267,9 +267,9 @@ class RabbitMqConnection extends ReactContextBaseJavaModule  {
     */
 
     @ReactMethod
-    public void addExchange(ReadableMap exchange_condig) {
+    public void addExchange(ReadableMap exchange_config) {
 
-        RabbitMqExchange exchange = new RabbitMqExchange(this.context, this.channel, exchange_condig);
+        RabbitMqExchange exchange = new RabbitMqExchange(this.context, this.channel, exchange_config);
 
         this.exchanges.add(exchange);
     }

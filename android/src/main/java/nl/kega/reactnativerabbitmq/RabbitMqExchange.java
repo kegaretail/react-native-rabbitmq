@@ -27,15 +27,15 @@ public class RabbitMqExchange {
 
     private Channel channel;
 
-    public RabbitMqExchange (ReactApplicationContext context, Channel channel, ReadableMap condig){
+    public RabbitMqExchange (ReactApplicationContext context, Channel channel, ReadableMap config){
         
         this.channel = channel;
 
-        this.name = condig.getString("name");
-        this.type = (condig.hasKey("type") ? condig.getString("type") : "fanout");
-        this.durable = (condig.hasKey("durable") ? condig.getBoolean("durable") : true);
-        this.autodelete = (condig.hasKey("autoDelete") ? condig.getBoolean("autoDelete") : false);
-        this.internal = (condig.hasKey("internal") ? condig.getBoolean("internal") : false);
+        this.name = config.getString("name");
+        this.type = (config.hasKey("type") ? config.getString("type") : "fanout");
+        this.durable = (config.hasKey("durable") ? config.getBoolean("durable") : true);
+        this.autodelete = (config.hasKey("autoDelete") ? config.getBoolean("autoDelete") : false);
+        this.internal = (config.hasKey("internal") ? config.getBoolean("internal") : false);
 
         Map<String, Object> args = new HashMap<String, Object>();
 

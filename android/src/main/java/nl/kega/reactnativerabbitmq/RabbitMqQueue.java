@@ -35,18 +35,18 @@ public class RabbitMqQueue {
     private Channel channel;
     private RabbitMqExchange exchange;
 
-    public RabbitMqQueue (ReactApplicationContext context, Channel channel, ReadableMap queue_condig, ReadableMap arguments){
+    public RabbitMqQueue (ReactApplicationContext context, Channel channel, ReadableMap queue_config, ReadableMap arguments){
        
         this.context = context;
         this.channel = channel;
 
-        this.name = queue_condig.getString("name");
-        this.exclusive = (queue_condig.hasKey("exclusive") ? queue_condig.getBoolean("exclusive") : false);
-        this.durable = (queue_condig.hasKey("durable") ? queue_condig.getBoolean("durable") : true);
-        this.autodelete = (queue_condig.hasKey("autoDelete") ? queue_condig.getBoolean("autoDelete") : false);
-        this.autoack = (queue_condig.hasKey("autoAck") ? queue_condig.getBoolean("autoAck") : false);
+        this.name = queue_config.getString("name");
+        this.exclusive = (queue_config.hasKey("exclusive") ? queue_config.getBoolean("exclusive") : false);
+        this.durable = (queue_config.hasKey("durable") ? queue_config.getBoolean("durable") : true);
+        this.autodelete = (queue_config.hasKey("autoDelete") ? queue_config.getBoolean("autoDelete") : false);
+        this.autoack = (queue_config.hasKey("autoAck") ? queue_config.getBoolean("autoAck") : false);
 
-        this.consumer_arguments = (queue_condig.hasKey("consumer_arguments") ? queue_condig.getMap("consumer_arguments") : null);
+        this.consumer_arguments = (queue_config.hasKey("consumer_arguments") ? queue_config.getMap("consumer_arguments") : null);
      
         Map<String, Object> args = toHashMap(arguments);
 

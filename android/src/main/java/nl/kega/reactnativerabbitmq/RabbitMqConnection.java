@@ -69,7 +69,14 @@ class RabbitMqConnection extends ReactContextBaseJavaModule  {
         this.factory.setPort(this.config.getInt("port"));
         this.factory.setAutomaticRecoveryEnabled(true);
         this.factory.setRequestedHeartbeat(10);
-        
+
+        try {
+            if (this.config.getInt("port") == 5671) {
+                this.factory.useSslProtocol();
+            }
+        } catch(Exception e) {
+            Log.e("RabbitMqConnection", e);
+        }
 
     }
 
@@ -139,11 +146,11 @@ class RabbitMqConnection extends ReactContextBaseJavaModule  {
                     this.channel.addConfirmListener(new ConfirmListener() {
 
                         public void handleNack(long deliveryTag, boolean multiple) throws IOException {
-                            Log.e("RabbitMqQueue", "Not ack received -------------------------------");
+                            Log.e("RabbitMqQueue", "Not ack received");
                         }
                 
                         public void handleAck(long deliveryTag, boolean multiple) throws IOException {
-                            Log.e("RabbitMqQueue", "Ack received ------------------------------------");
+                            Log.e("RabbitMqQueue", "Ack received");
                         }
                     });
 

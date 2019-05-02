@@ -199,7 +199,7 @@ class RabbitMqConnection extends ReactContextBaseJavaModule  {
     }
 
     @ReactMethod
-    public void unbindQueue(String exchange_name, String queue_name) {
+    public void unbindQueue(String exchange_name, String queue_name, String routing_key) {
         
         RabbitMqQueue found_queue = null;
         for (RabbitMqQueue queue : queues) {

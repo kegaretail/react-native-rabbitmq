@@ -4,7 +4,7 @@
 #ifdef OLDER_IMPORT
     #import "RCTBridge.h"
 #else
-    #import <React/RCTBridge.h>
+    #import <React/RCTBridgeModule.h>
 #endif
 
 @interface ReactNativeRabbitMq : NSObject <RCTBridgeModule>

@@ -87,7 +87,9 @@ const config = {
 	port:5672,
 	username:'user',
 	password:'password',
-	virtualhost:'vhost'
+	virtualhost:'vhost',
+	ttl: 10000 // Message time to live,
+	ssl: true // Enable ssl connection, make sure the port is 5671 or an other ssl port
 }
 
 let connection = new Connection(config);

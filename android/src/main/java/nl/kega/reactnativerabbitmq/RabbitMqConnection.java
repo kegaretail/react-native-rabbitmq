@@ -75,7 +75,7 @@ class RabbitMqConnection extends ReactContextBaseJavaModule  {
                 this.factory.useSslProtocol();
             }
         } catch(Exception e) {
-            Log.e("RabbitMqConnection", e);
+            Log.e("RabbitMqConnection", e.toString());
         }
 
     }

@@ -28,12 +28,10 @@ RCT_EXPORT_METHOD(initialize:(NSDictionary *) config)
 RCT_EXPORT_METHOD(connect)
 {
 
-    RabbitMqDelegateLogger *delegate = [[RabbitMqDelegateLogger alloc] initWithBridge:self.bridge];
+    RabbitMqDelegateLogger *delegate = [[RabbitMqDelegateLogger alloc] init];
 
     NSString *protocol = @"amqp";
-
-    Boolean ssl = self.config[@"ssl"];
-    if (ssl) {
+    if ([self.config objectForKey:@"ssl"] != nil && [[self.config objectForKey:@"ssl"] boolValue]){
         protocol = @"amqps";
     }
 
@@ -55,7 +53,7 @@ RCT_EXPORT_METHOD(connect)
         
         self.connected = true;
 
-        [self.bridge.eventDispatcher sendAppEventWithName:@"RabbitMqConnectionEvent" body:@{@"name": @"connected"}];
+        [EventEmitter emitEventWithName:@"RabbitMqConnectionEvent" body:@{@"name": @"connected"}];
 
     }];
 }
@@ -70,8 +68,7 @@ RCT_EXPORT_METHOD(addQueue:(NSDictionary *) config arguments:(NSDictionary *)arg
     if (self.connected){ 
         self.channel = [self.connection createChannel];
 
-        RMQQueueDeclareOptions queue_options = RMQQueueDeclareDurable;
-        RabbitMqQueue *queue = [[RabbitMqQueue alloc] initWithConfig:config channel:self.channel bridge:self.bridge];
+        RabbitMqQueue *queue = [[RabbitMqQueue alloc] initWithConfig:config channel:self.channel];
 
         [self.queues addObject:queue];
     }

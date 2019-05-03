@@ -1,19 +1,12 @@
-
-#ifdef OLDER_IMPORT
-    #import "RCTBridge.h"
-    #import "RCTEventDispatcher.h"
-#else
-    #import <React/RCTBridgeModule.h>
-    #import <React/RCTEventDispatcher.h>
-#endif
+#import <React/RCTBridgeModule.h>
 
 #import <RMQClient/RMQClient.h>
+#import "EventEmitter.h"
 
 @interface RabbitMqQueue : NSObject <RCTBridgeModule>
 
     - (nonnull id) initWithConfig:(nonnull NSDictionary *)config
-                          channel:(nonnull id<RMQChannel>)channel
-                           bridge:(nonnull RCTBridge *)bridge;
+                          channel:(nonnull id<RMQChannel>)channel;
 
     - (void) bind:(nonnull RMQExchange *)exchange routing_key:(NSString *)routing_key;
     - (void) unbind:(nonnull RMQExchange *)exchange routing_key:(NSString *)routing_key;

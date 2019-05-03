@@ -14,13 +14,12 @@
 
 RCT_EXPORT_MODULE();
 
--(id)initWithConfig:(NSDictionary *)config channel:(id<RMQChannel>)channel bridge:(RCTBridge *)bridge {
+-(id)initWithConfig:(NSDictionary *)config channel:(id<RMQChannel>)channel {
     if (self = [super init]) {
 
         self.config = config;
         self.channel = channel;
         self.name = [config objectForKey:@"name"];
-        self.bridge = bridge;
 
         self.options = RMQQueueDeclareNoOptions;
     
@@ -67,8 +66,8 @@ RCT_EXPORT_MODULE();
             NSString *body = [[NSString alloc] initWithData:message.body encoding:NSUTF8StringEncoding];
 
             //[self.channel ack:message.deliveryTag];
-
-            [self.bridge.eventDispatcher sendAppEventWithName:@"RabbitMqQueueEvent" 
+           
+            [EventEmitter emitEventWithName:@"RabbitMqQueueEvent" 
                 body:@{
                     @"name": @"message", 
                     @"queue_name": self.name, 
@@ -80,6 +79,7 @@ RCT_EXPORT_MODULE();
                     @"delivery_tag": message.deliveryTag
                 }
             ];
+    
         }];
 
     }

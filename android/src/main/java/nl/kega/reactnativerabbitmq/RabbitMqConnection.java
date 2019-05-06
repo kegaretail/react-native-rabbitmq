@@ -69,9 +69,9 @@ class RabbitMqConnection extends ReactContextBaseJavaModule  {
         this.factory.setPort(this.config.getInt("port"));
         this.factory.setAutomaticRecoveryEnabled(true);
         this.factory.setRequestedHeartbeat(10);
-
+   
         try {
-            if (this.config.getBoolean("ssl")) {
+            if (this.config.hasKey("ssl") && this.config.getBoolean("ssl")) {
                 this.factory.useSslProtocol();
             }
         } catch(Exception e) {

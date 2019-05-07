@@ -8,7 +8,7 @@ npm install react-native-rabbitmq --save
 
  Installation with CocoaPods
 
-1. In the Podfile uncomment "use_frameworks":
+1. In the Podfile uncomment "use_frameworks" (Optional):
 
 ```
 use_frameworks!

@@ -216,7 +216,7 @@ class RabbitMqConnection extends ReactContextBaseJavaModule  {
         }
 
         if (!found_queue.equals(null) && !found_exchange.equals(null)){
-            found_queue.unbind();
+            found_queue.unbind(routing_key);
         }
     }
 

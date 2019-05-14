@@ -86,11 +86,11 @@ public class RabbitMqQueue {
         }
     }
 
-    public void unbind(){ 
+    public void unbind(String routing_key){ 
         try {
   
             if (!this.exchange.equals(null)){
-                this.channel.queueUnbind(this.name, this.exchange.name, this.routing_key);
+                this.channel.queueUnbind(this.name, this.exchange.name, routing_key);
                 this.exchange = null;
             }
             

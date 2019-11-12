@@ -50,10 +50,15 @@ RCT_EXPORT_MODULE();
         if ([config objectForKey:@"consumer_arguments"] != nil){
 
             NSDictionary *consumer_arguments = [config objectForKey:@"consumer_arguments"];
+
+            if ([consumer_arguments objectForKey:@"x-message-ttl"] != nil){
+                NSNumber *ttl = [consumer_arguments objectForKey:@"x-message-ttl"];
+                [tmp_arguments setObject:[[RMQSignedShort alloc] init:[ttl integerValue]] forKey:@"x-message-ttl"];
+            }
+
             if ([consumer_arguments objectForKey:@"x-priority"] != nil){
                 NSNumber *xpriority = [consumer_arguments objectForKey:@"x-priority"];
-                NSInteger priority = [xpriority integerValue];
-                [tmp_arguments setObject:[[RMQSignedShort alloc] init:priority] forKey:@"x-priority"];
+                [tmp_arguments setObject:[[RMQSignedShort alloc] init:[xpriority integerValue]] forKey:@"x-priority"];
             }
 
             if ([consumer_arguments objectForKey:@"x-single-active-consumer"] != nil){

@@ -60,6 +60,7 @@ RCT_EXPORT_METHOD(connect)
 
 RCT_EXPORT_METHOD(close)
 {
+    [self.channel close];
     [self.connection close];
 }
 

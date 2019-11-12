@@ -46,13 +46,21 @@ RCT_EXPORT_MODULE();
         self.queue = [self.channel queue:self.name options:self.options];
         
 
-        NSDictionary *tmp_arguments = @{};
+        NSMutableDictionary *tmp_arguments = [[NSMutableDictionary alloc]init];
         if ([config objectForKey:@"consumer_arguments"] != nil){
+
             NSDictionary *consumer_arguments = [config objectForKey:@"consumer_arguments"];
             if ([consumer_arguments objectForKey:@"x-priority"] != nil){
                 NSNumber *xpriority = [consumer_arguments objectForKey:@"x-priority"];
-                tmp_arguments = @{@"x-priority": [[RMQSignedShort alloc] init:xpriority]};
+                NSInteger priority = [xpriority integerValue];
+                [tmp_arguments setObject:[[RMQSignedShort alloc] init:priority] forKey:@"x-priority"];
             }
+
+            if ([consumer_arguments objectForKey:@"x-single-active-consumer"] != nil){
+                BOOL active = [[consumer_arguments valueForKey:@"x-single-active-consumer"] boolValue];
+                [tmp_arguments setObject:[[RMQBoolean alloc] init:active] forKey:@"x-single-active-consumer"];
+            }
+
         }
 
         RMQBasicConsumeOptions consumer_options = RMQBasicConsumeNoOptions;

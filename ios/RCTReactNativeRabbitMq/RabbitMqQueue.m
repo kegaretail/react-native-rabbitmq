@@ -7,6 +7,7 @@
     @property (nonatomic, readwrite) id<RMQChannel> channel;
     @property (nonatomic, readwrite) RMQQueueDeclareOptions options;
     @property (nonatomic, readwrite) RCTBridge *bridge;
+    @property (nonatomic, readwrite) RMQConsumer *consumer;
 @end
 
 @implementation RabbitMqQueue
@@ -72,7 +73,7 @@ RCT_EXPORT_MODULE();
 
         RMQTable *arguments = [[RMQTable alloc] init:tmp_arguments];
 
-        [self.queue subscribe:consumer_options
+        self.consumer = [self.queue subscribe:consumer_options
                     arguments:arguments
                     handler:^(RMQMessage * _Nonnull message) {
 
@@ -124,6 +125,10 @@ RCT_EXPORT_MODULE();
 
 -(void) ack:(NSNumber *)deliveryTag {
     [self.channel ack:deliveryTag];
+}
+
+-(void) cancelConsumer {
+    [self.consumer cancel];
 }
 
 @end

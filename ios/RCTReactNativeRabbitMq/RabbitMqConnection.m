@@ -60,8 +60,15 @@ RCT_EXPORT_METHOD(connect)
 
 RCT_EXPORT_METHOD(close)
 {
-    [self.channel close];
+    for(id q in self.queues) {
+        [q cancelConsumer];
+    }
+    
     [self.connection close];
+    [self.queues removeAllObjects];
+    [self.exchanges removeAllObjects];
+    
+    self.connection = nil;
 }
 
 RCT_EXPORT_METHOD(addQueue:(NSDictionary *) config arguments:(NSDictionary *)arguments)
@@ -112,6 +119,15 @@ RCT_EXPORT_METHOD(basicAck:(NSString *)queue_name delivery_tag:(nonnull NSNumber
 
     if (queue_id != nil){
         [queue_id ack:delivery_tag];
+    }
+}
+
+RCT_EXPORT_METHOD(cancelConsumer:(NSString *)queue_name)
+{
+    id queue_id = [self findQueue:queue_name];
+
+    if (queue_id != nil){
+        [queue_id cancelConsumer];
     }
 }
 

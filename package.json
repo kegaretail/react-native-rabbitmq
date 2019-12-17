@@ -1,66 +1,4 @@
 {
-  "_args": [
-    [
-      {
-        "raw": "react-native-rabbitmq",
-        "scope": null,
-        "escapedName": "react-native-rabbitmq",
-        "name": "react-native-rabbitmq",
-        "rawSpec": "",
-        "spec": "latest",
-        "type": "tag"
-      },
-      "C:\\GitHub\\rnapp"
-    ],
-    [
-      {
-        "raw": "react-native-rabbitmq@^0.5.7",
-        "scope": null,
-        "escapedName": "react-native-rabbitmq",
-        "name": "react-native-rabbitmq",
-        "rawSpec": "^0.5.7",
-        "spec": ">=0.5.7 <0.6.0",
-        "type": "range"
-      },
-      "C:\\GitHub\\MOBILE_winkelfocus2"
-    ]
-  ],
-  "_from": "react-native-rabbitmq@0.5.23",
-  "_id": "react-native-rabbitmq@0.5.23",
-  "_inBundle": false,
-  "_inCache": true,
-  "_integrity": "sha512-TPQ7iBufJXOSFW9U+eh8mLblDaN0llocNCIZWXrpuJPbJ50YNYymjL0u5ytZw5BBEHK7Gmt4VXj/G+6ALkyqkg==",
-  "_location": "/react-native-rabbitmq",
-  "_nodeVersion": "7.0.0",
-  "_npmOperationalInternal": {
-    "host": "packages-18-east.internal.npmjs.com",
-    "tmp": "tmp/react-native-rabbitmq-0.5.7.tgz_1488187459385_0.1154757144395262"
-  },
-  "_npmUser": {
-    "name": "timhonders",
-    "email": "tim.honders@kega.nl"
-  },
-  "_npmVersion": "3.10.8",
-  "_phantomChildren": {},
-  "_requested": {
-    "type": "version",
-    "registry": true,
-    "raw": "react-native-rabbitmq@0.5.23",
-    "name": "react-native-rabbitmq",
-    "escapedName": "react-native-rabbitmq",
-    "rawSpec": "0.5.23",
-    "saveSpec": null,
-    "fetchSpec": "0.5.23"
-  },
-  "_requiredBy": [
-    "#USER",
-    "/"
-  ],
-  "_resolved": "https://registry.npmjs.org/react-native-rabbitmq/-/react-native-rabbitmq-0.5.23.tgz",
-  "_shasum": "5d6a0e1a206611bbed0b70244787a5d03f0327fb",
-  "_shrinkwrap": null,
-  "_spec": "react-native-rabbitmq@0.5.23",
-  "_where": "C:\\GitHub\\branches\\MOBILE_InTouch",
   "author": {
     "name": "Tim Honders"
   },
@@ -73,11 +11,6 @@
   "description": "A RabbitMq component for React Native.",
   "devDependencies": {},
   "directories": {},
-  "dist": {
-    "shasum": "057655ce83b146f93f8840254d71382fcc5bce71",
-    "tarball": "https://registry.npmjs.org/react-native-rabbitmq/-/react-native-rabbitmq-0.5.7.tgz"
-  },
-  "gitHead": "bf5e3cefd92e36fab4da1b02d66a5352484c056c",
   "homepage": "https://github.com/kegaretail/react-native-rabbitmq",
   "keywords": [
     "react-native",
@@ -98,11 +31,6 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kegaretail/react-native-rabbitmq.git"
-  },
-  "rnpm": {
-    "commands": {
-      "prelink": "node ./node_modules/react-native-rabbitmq/scripts/prelink.js"
-    }
   },
   "scripts": {},
   "version": "0.6.6"

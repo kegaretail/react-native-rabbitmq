@@ -33,5 +33,5 @@
     "url": "git+https://github.com/kegaretail/react-native-rabbitmq.git"
   },
   "scripts": {},
-  "version": "0.6.6"
+  "version": "0.6.7"
 }

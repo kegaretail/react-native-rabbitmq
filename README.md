@@ -9,6 +9,20 @@
 ## IOS
 npm install react-native-rabbitmq --save
 
+cd ./ios
+pod install
+
+You need to change some things, to make it work:
+
+ios\Pods\RMQClient\RMQClient\RMQValues.h Line 53
+```
+@import JKVValue;
+```
+to
+```
+#import "JKVValue.h"
+```
+
 ## Android
 
 npm install react-native-rabbitmq --save

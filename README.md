@@ -2,6 +2,19 @@
 
 ## Installation
 
+
+
+## RN 0.60 >
+
+## IOS
+npm install react-native-rabbitmq --save
+
+## Android
+
+npm install react-native-rabbitmq --save
+
+## RN 0.60 <
+
 ## IOS
 
 npm install react-native-rabbitmq --save

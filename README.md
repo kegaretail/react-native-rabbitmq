@@ -10,18 +10,11 @@
 npm install react-native-rabbitmq --save
 
 cd ./ios
+
+change in the Podfile line 1:
+platform :ios, '9.0' to platform :ios, '10.0'
+
 pod install
-
-You need to change some things, to make it work:
-
-ios\Pods\RMQClient\RMQClient\RMQValues.h Line 53
-```
-@import JKVValue;
-```
-to
-```
-#import "JKVValue.h"
-```
 
 ## Android
 

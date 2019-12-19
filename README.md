@@ -126,6 +126,8 @@ connection.on('connected', (event) => {
 		durable: true,
 		exclusive: false,
 		consumer_arguments: {'x-priority': 1}
+	}, {
+	// queueDeclare args here like x-message-ttl
 	});
 
 	let exchange = new Exchange(connection, {

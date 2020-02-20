@@ -185,11 +185,11 @@ RCT_EXPORT_METHOD(publishToExchange:(NSString *)message exchange_name:(NSString 
 
         NSMutableArray *properties = [[NSMutableArray alloc] init];
 
-        if ([message_properties objectForKey:@"content_type"] != nil && [[message_properties objectForKey:@"content_type"] isMemberOfClass:[NSString class]]){
-            [properties addObject:[[RMQBasicContentType alloc] init:[[message_properties objectForKey:@"content_type"] stringValue]]];
+        if ([message_properties objectForKey:@"content_type"] != nil && [[message_properties objectForKey:@"content_type"] isKindOfClass:[NSString class]]){
+            [properties addObject:[[RMQBasicContentType alloc] init:[message_properties objectForKey:@"content_type"]]];
         }
-        if ([message_properties objectForKey:@"content_encoding"] != nil && [[message_properties objectForKey:@"content_encoding"] isMemberOfClass:[NSString class]]){
-            [properties addObject:[[RMQBasicContentEncoding alloc] init:[[message_properties objectForKey:@"content_encoding"] stringValue]]];
+        if ([message_properties objectForKey:@"content_encoding"] != nil && [[message_properties objectForKey:@"content_encoding"] isKindOfClass:[NSString class]]){
+            [properties addObject:[[RMQBasicContentEncoding alloc] init:[message_properties objectForKey:@"content_encoding"]]];
         }
         if ([message_properties objectForKey:@"delivery_mode"] != nil){
             [properties addObject:[[RMQBasicDeliveryMode alloc] init:[[message_properties objectForKey:@"delivery_mode"] intValue]]];
@@ -197,26 +197,26 @@ RCT_EXPORT_METHOD(publishToExchange:(NSString *)message exchange_name:(NSString 
         if ([message_properties objectForKey:@"priority"] != nil){
             [properties addObject:[[RMQBasicPriority alloc] init:[[message_properties objectForKey:@"priority"] intValue]]];
         }
-        if ([message_properties objectForKey:@"correlation_id"] != nil && [[message_properties objectForKey:@"correlation_id"] isMemberOfClass:[NSString class]]){
-            [properties addObject:[[RMQBasicCorrelationId alloc] init:[[message_properties objectForKey:@"correlation_id"] stringValue]]];
+        if ([message_properties objectForKey:@"correlation_id"] != nil && [[message_properties objectForKey:@"correlation_id"] isKindOfClass:[NSString class]]){
+            [properties addObject:[[RMQBasicCorrelationId alloc] init:[message_properties objectForKey:@"correlation_id"]]];
         }
-        if ([message_properties objectForKey:@"expiration"] != nil && [[message_properties objectForKey:@"expiration"] isMemberOfClass:[NSString class]]){
-            [properties addObject:[[RMQBasicExpiration alloc] init:[[message_properties objectForKey:@"expiration"] stringValue]]];
+        if ([message_properties objectForKey:@"expiration"] != nil && [[message_properties objectForKey:@"expiration"] isKindOfClass:[NSString class]]){
+            [properties addObject:[[RMQBasicExpiration alloc] init:[message_properties objectForKey:@"expiration"]]];
         }
-        if ([message_properties objectForKey:@"message_id"] != nil && [[message_properties objectForKey:@"message_id"] isMemberOfClass:[NSString class]]){
-            [properties addObject:[[RMQBasicMessageId alloc] init:[[message_properties objectForKey:@"message_id"] stringValue]]];
+        if ([message_properties objectForKey:@"message_id"] != nil && [[message_properties objectForKey:@"message_id"] isKindOfClass:[NSString class]]){
+            [properties addObject:[[RMQBasicMessageId alloc] init:[message_properties objectForKey:@"message_id"]]];
         }
-        if ([message_properties objectForKey:@"type"] != nil && [[message_properties objectForKey:@"type"] isMemberOfClass:[NSString class]]){
-            [properties addObject:[[RMQBasicType alloc] init:[[message_properties objectForKey:@"type"] stringValue]]];
+        if ([message_properties objectForKey:@"type"] != nil && [[message_properties objectForKey:@"type"] isKindOfClass:[NSString class]]){
+            [properties addObject:[[RMQBasicType alloc] init:[message_properties objectForKey:@"type"]]];
         }
-        if ([message_properties objectForKey:@"user_id"] != nil && [[message_properties objectForKey:@"user_id"] isMemberOfClass:[NSString class]]){
-            [properties addObject:[[RMQBasicUserId alloc] init:[[message_properties objectForKey:@"user_id"] stringValue]]];
+        if ([message_properties objectForKey:@"user_id"] != nil && [[message_properties objectForKey:@"user_id"] isKindOfClass:[NSString class]]){
+            [properties addObject:[[RMQBasicUserId alloc] init:[message_properties objectForKey:@"user_id"]]];
         }
-        if ([message_properties objectForKey:@"app_id"] != nil && [[message_properties objectForKey:@"app_id"] isMemberOfClass:[NSString class]]){
-            [properties addObject:[[RMQBasicAppId alloc] init:[[message_properties objectForKey:@"app_id"] stringValue]]];
+        if ([message_properties objectForKey:@"app_id"] != nil && [[message_properties objectForKey:@"app_id"] isKindOfClass:[NSString class]]){
+            [properties addObject:[[RMQBasicAppId alloc] init:[message_properties objectForKey:@"app_id"]]];
         }
-        if ([message_properties objectForKey:@"reply_to"] != nil && [[message_properties objectForKey:@"reply_to"] isMemberOfClass:[NSString class]]){
-            [properties addObject:[[RMQBasicReplyTo alloc] init:[[message_properties objectForKey:@"reply_to"] stringValue]]];
+        if ([message_properties objectForKey:@"reply_to"] != nil && [[message_properties objectForKey:@"reply_to"] isKindOfClass:[NSString class]]){
+            [properties addObject:[[RMQBasicReplyTo alloc] init:[message_properties objectForKey:@"reply_to"]]];
         }
 
         [exchange_id publish:data routingKey:routing_key properties:properties options:RMQBasicPublishNoOptions];

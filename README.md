@@ -113,6 +113,7 @@ const config = {
 }
 
 let connection = new Connection(config);
+connection.connect();
 
 connection.on('error', (event) => {
 

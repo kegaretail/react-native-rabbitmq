@@ -142,7 +142,9 @@ connection.on('connected', (event) => {
 
 	// Receive one message when it arrives
 	queue.on('message', (data) => {
-
+		
+		/* Acknowledge server with the received message delivery tag to receive new messages */
+		queue.basicAck(data.delivery_tag);
 	});
 
 	// Receive all messages send with in a second

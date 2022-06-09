@@ -58,7 +58,10 @@ public class RabbitMqExchange {
 
             if (message_properties != null){
                  try {
-                     
+                    if(message_properties.hasKey("headers") && message_properties.getType("headers") == ReadableType.Map) {
+                        ReadableMap raw = message_properties.getMap("headers");
+                        properties.headers(raw.toHashMap());
+                    }
                     if (message_properties.hasKey("content_type") && message_properties.getType("content_type") == ReadableType.String){
                         properties.contentType(message_properties.getString("content_type"));
                     }

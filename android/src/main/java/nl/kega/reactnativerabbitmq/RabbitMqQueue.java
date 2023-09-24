@@ -201,4 +201,17 @@ public class RabbitMqQueue {
   
     }
 
+    public void basicNack(long delivery_tag) {
+        try {
+            this.channel.basicNack(delivery_tag, false, true);
+        } catch (IOException e){
+            Log.e("RabbitMqQueue", "basicNack " + e);
+            e.printStackTrace();
+        } catch (AlreadyClosedException e){
+            Log.e("RabbitMqQueue AlreadyClosedException", "basicNack " + e);
+            e.printStackTrace();
+        }
+
+    }
+
 }

@@ -42,10 +42,7 @@ RCT_EXPORT_MODULE();
 
         if ([config objectForKey:@"NoWait"] != nil && [[config objectForKey:@"NoWait"] boolValue]){
             self.options = self.options | RMQQueueDeclareNoWait;
-        }
-
-        self.queue = [self.channel queue:self.name options:self.options];
-        
+        }      
 
         NSMutableDictionary *tmp_arguments = [[NSMutableDictionary alloc]init];
         if ([config objectForKey:@"consumer_arguments"] != nil){
@@ -73,6 +70,7 @@ RCT_EXPORT_MODULE();
 
         RMQTable *arguments = [[RMQTable alloc] init:tmp_arguments];
 
+        self.queue = [self.channel queue:self.name options:self.options arguments:tmp_arguments];
         self.consumer = [self.queue subscribe:consumer_options
                     arguments:arguments
                     handler:^(RMQMessage * _Nonnull message) {
